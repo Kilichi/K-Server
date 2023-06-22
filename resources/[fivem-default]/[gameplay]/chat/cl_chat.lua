@@ -248,6 +248,18 @@ if not isRDR then
   end, false)
 end
 
+RegisterCommand('showChat',
+  function()
+    chatInputActive = true
+    chatInputActivating = true
+    SendNUIMessage({
+      type = 'ON_OPEN'
+    })
+  end
+)
+
+RegisterKeyMapping('showChat', 'Abrir Chat', 'keyboard', 'T')
+
 Citizen.CreateThread(function()
   SetTextChatEnabled(false)
   SetNuiFocus(false)
@@ -256,20 +268,9 @@ Citizen.CreateThread(function()
   local origChatHideState = -1
 
   while true do
-    Wait(0)
-
-    if not chatInputActive then
-      if IsControlPressed(0, isRDR and `INPUT_MP_TEXT_CHAT_ALL` or 245) --[[ INPUT_MP_TEXT_CHAT_ALL ]] then
-        chatInputActive = true
-        chatInputActivating = true
-
-        SendNUIMessage({
-          type = 'ON_OPEN'
-        })
-      end
-    end
-
+    s = 200
     if chatInputActivating then
+      s = 0
       if not IsControlPressed(0, isRDR and `INPUT_MP_TEXT_CHAT_ALL` or 245) then
         SetNuiFocus(true)
 
@@ -304,5 +305,6 @@ Citizen.CreateThread(function()
         isFirstHide = false
       end
     end
+    Wait(s)
   end
 end)
