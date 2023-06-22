@@ -1,5 +1,7 @@
 -- in-memory spawnpoint array for this script execution instance
-local spawnPoints = {}
+local spawnPoints = {
+    {x = 1, y = 1, z = 1}
+}
 
 -- auto-spawn enabled flag
 local autoSpawnEnabled = false
@@ -341,7 +343,7 @@ local diedAt
 Citizen.CreateThread(function()
     -- main loop thing
     while true do
-        Citizen.Wait(50)
+        Citizen.Wait(500)
 
         local playerPed = PlayerPedId()
 
